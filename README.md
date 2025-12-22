@@ -70,7 +70,7 @@ This repository fixes the Flarum version to use a stable version (currently v.1.
 #### 1. Clone The Repository
 
 ```bash
-git clone https://github.com/hansmorb/docker-flarum.git
+git clone https://github.com/DRUCK-Medien/docker-flarum.git
 cd docker-flarum
 ```
 
