@@ -2,7 +2,7 @@
   'debug' => <DEBUG>,
   'offline' => false,
   'database' => array (
-    'driver' => 'mysql',
+    'driver' => 'mariadb',
     'host' => '<DB_HOST>',
     'port' => '<DB_PORT>',
     'database' => '<DB_NAME>',

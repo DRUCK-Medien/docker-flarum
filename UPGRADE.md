@@ -10,14 +10,15 @@ This project gives you full control over your Flarum version by allowing you to 
 
 Here is the general workflow for upgrading your Flarum instance.
 
-### 1. Edit Your `Dockerfile`
+### 1. Set the Version and Check PHP Extensions
 
-1.  **Update the Flarum Version:** Change the `FLARUM_VERSION` build argument in your `docker-compose.yml`.
+1.  **Set the Flarum Version:** In the `.env` file deployed by Ansible, set:
 
-    ```yaml
-    args:
-      - FLARUM_VERSION=^2.0
+    ```dotenv
+    FLARUM_VERSION_TAG=v2.0.2
     ```
+
+    The Dockerfile creates `composer.json` during the build and pins `flarum/core` to `v2.0.2`. You do not need to edit `composer.json` for the bundled extensions. Check third-party extensions against the official upgrade guide before rebuilding.
 
 2.  **Add PHP Extensions (if required):** Add it to the `apk add` list in your `Dockerfile`.
 
@@ -30,11 +31,11 @@ Here is the general workflow for upgrading your Flarum instance.
 
 ### 2. Rebuild the Docker Image
 
-Backup your database before rebuilding.
+Back up your database and `volumes/flarum` before rebuilding. Test the upgrade on staging first.
 
 ```bash
-docker-compose down -v
-docker-compose up --build -d
+docker compose build flarum
+docker compose up -d --no-deps --force-recreate flarum
 ```
 
 ### 3. Run Post-Upgrade Commands

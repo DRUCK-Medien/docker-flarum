@@ -10,7 +10,7 @@ This image was originally using Alpine 3.18 and PHP 8.2. Currently we are using 
 
 ## Tagged Releases
 
-This repository fixes the Flarum version to use a stable version (currently v.1.8.1)
+This repository fixes the Flarum version to use a stable version (currently v2.0.2)
 
 ## Features
 

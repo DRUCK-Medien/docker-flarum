@@ -3,7 +3,7 @@ FROM alpine:3.22
 LABEL description="Simple forum software for building great communities" \
       maintainer="kitbur <https://github.com/kitbur>"
 
-ARG FLARUM_VERSION="v1.8.1"
+ARG FLARUM_VERSION="v2.0.2"
 
 ENV GID=991 \
     UID=991 \
@@ -63,7 +63,10 @@ RUN cd /tmp \
 RUN sed -i "s/memory_limit = .*/memory_limit = ${PHP_MEMORY_LIMIT}/" /etc/php84/php.ini \
   && mkdir -p /run/php /flarum/app
 
-RUN COMPOSER_CACHE_DIR="/tmp" composer create-project flarum/flarum:${FLARUM_VERSION} /flarum/app --stability=beta \
+RUN COMPOSER_CACHE_DIR="/tmp" composer create-project flarum/flarum:${FLARUM_VERSION} /flarum/app --stability=beta --no-install \
+  && cd /flarum/app \
+  && composer require "flarum/core:${FLARUM_VERSION}" --no-update \
+  && COMPOSER_CACHE_DIR="/tmp" composer install --prefer-dist --no-dev --no-plugins \
   && composer clear-cache \
   && rm -rf /flarum/.composer /tmp/*
 
